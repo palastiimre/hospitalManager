@@ -9,11 +9,18 @@ import java.util.Set;
 import static hospital.com.hospitalmanager.enums.UserPermission.*;
 
 public enum UserRole {
-    HOSPITAL_DIRECTOR,
-    DOCTOR,
-    ADMINISTRATOR,
-    CONTRIBUTOR,
-    PATIENT
+    HOSPITAL_DIRECTOR("hospital_director"),
+    DOCTOR("doctor"),
+    ADMINISTRATOR("administrator"),
+    NURSE("nurse"),
+    CONTRIBUTOR("contributor"),
+    PATIENT("patient");
+
+    private String displayName;
+
+    UserRole(String displayName) {
+        this.displayName = displayName;
+    }
 
 //    HOSPITAL_DIRECTOR(Sets.newHashSet()),
 //    DOCTOR(
