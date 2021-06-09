@@ -1,6 +1,7 @@
 package hospital.com.hospitalmanager.services;
 
 import hospital.com.hospitalmanager.entities.Employee;
+import hospital.com.hospitalmanager.enums.UserRole;
 import hospital.com.hospitalmanager.enums.errormessages.ErrorMessage;
 import hospital.com.hospitalmanager.interfaces.IEmployeeService;
 import hospital.com.hospitalmanager.models.EmployeeModel;
@@ -116,12 +117,6 @@ public class EmployeeService implements IEmployeeService {
         BeanUtils.copyProperties(newEmployee,userDto);
         return userDto;
     }
-
-//    private EmployeeResponseModel mapFromUserModelToUserRequestModel(EmployeeModel userModel){
-//        EmployeeResponseModel employeeResponseModel = new EmployeeResponseModel();
-//        BeanUtils.copyProperties(userModel, employeeResponseModel);
-//        return employeeResponseModel;
-//    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

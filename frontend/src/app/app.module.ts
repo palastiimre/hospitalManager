@@ -14,8 +14,11 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { RegistrationComponent } from './registration/registration.component';
 import { HomeComponent } from './home/home.component';
 import {MatOptionModule} from "@angular/material/core";
-import {FormsModule} from "@angular/forms";
+import {FormsModule,ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HttpRequestInterceptor} from "./utils/HttpRequestInterceptor";
 
 
 const routes: Routes = [
@@ -43,9 +46,14 @@ const routes: Routes = [
     MatToolbarModule,
     MatOptionModule,
     FormsModule,
-    MatIconModule
+    ReactiveFormsModule,
+    MatIconModule,
+    MatSelectModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
