@@ -8,6 +8,8 @@ class HospitalManagerApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("test message");
+
 	}
 
 }
