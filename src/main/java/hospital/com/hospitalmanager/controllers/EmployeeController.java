@@ -17,10 +17,6 @@ public class EmployeeController {
     public EmployeeResponseModel getEmployee(@PathVariable String userId){
         return employeeService.getEmployeeByUserID(userId);
     }
-//    @PostMapping()
-//    public EmployeeModel createEmployee(@RequestBody EmployeeModel userModel) {
-//        return employeeService.create(userModel);
-//    }
 
     @PutMapping()
     public String updateEmployee() {
