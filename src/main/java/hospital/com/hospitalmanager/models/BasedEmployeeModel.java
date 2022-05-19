@@ -13,6 +13,7 @@ public class BasedEmployeeModel implements Serializable {
     private static final long serialVersionUID = 4932715387289896978L;
     private Integer id;
     private String userId;
+    private String userName;
     private String firstName;
     private String lastName;
     private String email;

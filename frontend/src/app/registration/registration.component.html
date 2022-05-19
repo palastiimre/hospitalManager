@@ -4,6 +4,10 @@
     <mat-toolbar color="primary">Regisztráció</mat-toolbar>
     <form fxLayoutAlign="stretch" fxLayout="column" class="login-form" [formGroup]="registrationForm" (ngSubmit)="submitRegistration()">
       <mat-form-field appearance="outline">
+        <mat-label>Felhasználónév:</mat-label>
+        <input matInput formControlName="userName">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Keresztnév:</mat-label>
         <input matInput formControlName="firstName">
       </mat-form-field>

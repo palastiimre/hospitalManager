@@ -13,6 +13,7 @@ export class RegistrationComponent implements OnInit {
 
 
   registrationForm = this.formBuilder.group({
+    userName: [null, [Validators.required]],
     firstName: [null, [Validators.required]],
     lastName: [null, [Validators.required]],
     email: [null, [Validators.required]],
