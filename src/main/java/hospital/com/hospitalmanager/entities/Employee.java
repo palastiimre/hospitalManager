@@ -30,6 +30,10 @@ public class Employee implements Serializable {
     @NotNull
     private String userId;
 
+    @Column(name = "user_name")
+    @NotNull
+    private String userName;
+
     @Column(name="first_name")
     @NotNull
     private String firstName;

@@ -40,7 +40,7 @@ public class EmployeeService implements IEmployeeService {
     public EmployeeResponseModel registration(EmployeeRegistrationRequestModel newEmployee) throws Exception {
         EmployeeResponseModel returnValue = new EmployeeResponseModel();
 
-        if(newEmployee.getFirstName().isEmpty() || newEmployee.getLastName().isEmpty())
+        if(newEmployee.getFirstName().isEmpty() || newEmployee.getLastName().isEmpty() || newEmployee.getUserName().isEmpty())
             throw new Exception(ErrorMessage.MISSING_REQUIRED_FIELDS.getErrorMessage());
 
         checkEmployeeByEmailInDatabase(newEmployee);
