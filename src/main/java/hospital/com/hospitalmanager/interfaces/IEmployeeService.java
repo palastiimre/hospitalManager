@@ -13,4 +13,5 @@ public interface IEmployeeService extends UserDetailsService {
 
     EmployeeResponseModel getEmployeeByUserID(String userID);
 
+    EmployeeResponseModel updateEmployee(String id, EmployeeRegistrationRequestModel employee) throws Exception;
 }
