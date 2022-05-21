@@ -1,9 +1,10 @@
 package hospital.com.hospitalmanager.services;
 
 import hospital.com.hospitalmanager.entities.Employee;
-import hospital.com.hospitalmanager.enums.UserRole;
 import hospital.com.hospitalmanager.enums.errormessages.ErrorMessage;
+import hospital.com.hospitalmanager.exceptions.EmployeeServiceException;
 import hospital.com.hospitalmanager.interfaces.IEmployeeService;
+import hospital.com.hospitalmanager.models.BasedEmployeeModel;
 import hospital.com.hospitalmanager.models.EmployeeModel;
 import hospital.com.hospitalmanager.models.EmployeeRegistrationRequestModel;
 import hospital.com.hospitalmanager.models.EmployeeResponseModel;
@@ -40,8 +41,8 @@ public class EmployeeService implements IEmployeeService {
     public EmployeeResponseModel registration(EmployeeRegistrationRequestModel newEmployee) throws Exception {
         EmployeeResponseModel returnValue = new EmployeeResponseModel();
 
-        if(newEmployee.getFirstName().isEmpty() || newEmployee.getLastName().isEmpty() || newEmployee.getUserName().isEmpty())
-            throw new Exception(ErrorMessage.MISSING_REQUIRED_FIELDS.getErrorMessage());
+        if (newEmployee.getFirstName().isEmpty() || newEmployee.getLastName().isEmpty() || newEmployee.getUserName().isEmpty())
+            throw new EmployeeServiceException(ErrorMessage.MISSING_REQUIRED_FIELDS.getErrorMessage());
 
         checkEmployeeByEmailInDatabase(newEmployee);
 
@@ -54,21 +55,21 @@ public class EmployeeService implements IEmployeeService {
 
         Employee storedEmployee = employeeRepository.save(employee);
 
-        BeanUtils.copyProperties(storedEmployee,returnValue);
+        BeanUtils.copyProperties(storedEmployee, returnValue);
 
         return returnValue;
     }
 
     @Override
-    public EmployeeModel getEmployee(String email) throws Exception{
+    public EmployeeModel getEmployee(String email) throws Exception {
         Employee employee = employeeRepository.findByEmail(email);
 
-        if(employee == null)
+        if (employee == null)
             throw new Exception(ErrorMessage.MISSING_REQUIRED_FIELDS.getErrorMessage());
 
         EmployeeModel userDto = new EmployeeModel();
 
-        BeanUtils.copyProperties(employee,userDto);
+        BeanUtils.copyProperties(employee, userDto);
         return userDto;
     }
 
@@ -79,17 +80,41 @@ public class EmployeeService implements IEmployeeService {
 
         Employee entityFromDB = employeeRepository.findEmployeeByUserId(userID);
 
-        if(entityFromDB == null){
+        if (entityFromDB == null) {
             throw new UsernameNotFoundException(userID);
         }
 
-        BeanUtils.copyProperties(entityFromDB,userDto);
-        BeanUtils.copyProperties(userDto,returnValue);
+        BeanUtils.copyProperties(entityFromDB, userDto);
+        BeanUtils.copyProperties(userDto, returnValue);
 
         return returnValue;
 
     }
 
+    @Override
+    public EmployeeResponseModel updateEmployee(String userID, EmployeeRegistrationRequestModel employee) throws Exception {
+        EmployeeResponseModel returnValue = new EmployeeResponseModel();
+        BasedEmployeeModel employeeDTO = new BasedEmployeeModel();
+
+        BeanUtils.copyProperties(employee,employeeDTO);
+
+        Employee entityFromDB = employeeRepository.findEmployeeByUserId(userID);
+
+        if (entityFromDB == null) {
+            throw new EmployeeServiceException(ErrorMessage.NO_RECORD_FOUND.getErrorMessage());
+        }
+        //for testing:
+        entityFromDB.setFirstName(employee.getFirstName());
+        entityFromDB.setLastName(employee.getLastName());
+
+        Employee updatedEmployee = employeeRepository.save(entityFromDB);
+        BasedEmployeeModel employeeDTO2 = new BasedEmployeeModel();
+
+        BeanUtils.copyProperties(updatedEmployee,employeeDTO2);
+        BeanUtils.copyProperties(employeeDTO2,returnValue);
+
+        return returnValue;
+    }
 
     private void generatePublicEmployeeID(Employee employee) {
         String publicUserId = utils.generateUserId(40);
@@ -102,7 +127,7 @@ public class EmployeeService implements IEmployeeService {
 
     private void checkEmployeeByEmailInDatabase(EmployeeRegistrationRequestModel newEmployee) {
         Employee employeeByEmail = employeeRepository.findByEmail(newEmployee.getEmail());
-        if(employeeByEmail !=null) throw new RuntimeException("Employee already exists!");
+        if (employeeByEmail != null) throw new RuntimeException("Employee already exists!");
     }
 
     private Employee mapFromUserModelToUser(EmployeeModel newEmployee) {
@@ -111,10 +136,9 @@ public class EmployeeService implements IEmployeeService {
         return employee;
     }
 
-    private EmployeeModel mapFromRequestModelToUsedDto(EmployeeRegistrationRequestModel newEmployee){
+    private EmployeeModel mapFromRequestModelToUsedDto(EmployeeRegistrationRequestModel newEmployee) {
         EmployeeModel userDto = new EmployeeModel();
-
-        BeanUtils.copyProperties(newEmployee,userDto);
+        BeanUtils.copyProperties(newEmployee, userDto);
         return userDto;
     }
 
@@ -122,9 +146,9 @@ public class EmployeeService implements IEmployeeService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Employee employee = employeeRepository.findByEmail(email);
 
-        if(employee == null) throw new UsernameNotFoundException(email);
+        if (employee == null) throw new UsernameNotFoundException(email);
 
-        return new User(employee.getEmail(),employee.getEncryptedPassword(),new ArrayList<>());
+        return new User(employee.getEmail(), employee.getEncryptedPassword(), new ArrayList<>());
     }
 
 

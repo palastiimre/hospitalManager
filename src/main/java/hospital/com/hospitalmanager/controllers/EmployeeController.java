@@ -1,6 +1,7 @@
 package hospital.com.hospitalmanager.controllers;
 
 import hospital.com.hospitalmanager.interfaces.IEmployeeService;
+import hospital.com.hospitalmanager.models.EmployeeRegistrationRequestModel;
 import hospital.com.hospitalmanager.models.EmployeeResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,9 +19,9 @@ public class EmployeeController {
         return employeeService.getEmployeeByUserID(userId);
     }
 
-    @PutMapping()
-    public String updateEmployee() {
-        return "update Employee was called";
+    @PutMapping(value = "/{userId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public EmployeeResponseModel updateEmployee(@PathVariable String userId,@RequestBody EmployeeRegistrationRequestModel employee) throws Exception {
+        return employeeService.updateEmployee(userId,employee);
     }
 
     @DeleteMapping()
