@@ -1,13 +1,5 @@
 package hospital.com.hospitalmanager.enums;
 
-import com.google.common.collect.Sets;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-import static hospital.com.hospitalmanager.enums.UserPermission.*;
-
 public enum UserRole {
     HOSPITAL_DIRECTOR("hospital_director"),
     DOCTOR("doctor"),

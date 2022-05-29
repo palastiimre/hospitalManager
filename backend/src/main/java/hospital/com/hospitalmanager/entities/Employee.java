@@ -1,7 +1,5 @@
 package hospital.com.hospitalmanager.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import hospital.com.hospitalmanager.enums.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
