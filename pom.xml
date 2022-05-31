@@ -11,7 +11,7 @@
 	<groupId>hospital.com</groupId>
 	<artifactId>hospitalmanager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>hospitalmanager</name>
+	<name>hospital-manager</name>
 	<description>Hospital Manager App</description>
 	<properties>
 		<java.version>11</java.version>
@@ -99,12 +99,13 @@
 
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.19.1</version>
+				<version>2.10</version>
 				<configuration>
 					<useFile>false</useFile>
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>hospital-manager</finalName>
 	</build>
 
 </project>
