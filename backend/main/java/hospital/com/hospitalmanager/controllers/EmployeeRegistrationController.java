@@ -21,7 +21,6 @@ public class EmployeeRegistrationController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces =MediaType.APPLICATION_JSON_VALUE )
     public EmployeeResponseModel employeeRegistration(@RequestBody EmployeeRegistrationRequestModel newEmployee) throws Exception {
-        EmployeeResponseModel registratedUser = employeeService.registration(newEmployee);
-        return registratedUser;
+        return employeeService.registration(newEmployee);
     }
 }
